@@ -1,0 +1,129 @@
+using System.Text;
+
+namespace KTTX1
+{
+    internal class Program
+    {
+        static void bbs(EMPLOYEE[] tmp, int c)
+        {
+                for (int i = 0; i < c - 1; i++)
+                {
+                    for (int j = c - 1; j > i; j--)
+                    {
+                        if (tmp[j].fullname[0] < tmp[j - 1].fullname[0])
+                        {
+                            EMPLOYEE temp = new EMPLOYEE();
+                            temp = tmp[j];
+                            tmp[j] = tmp[j - 1];
+                            tmp[j - 1] = temp;
+                        }
+                        else if(tmp[j].fullname[0] == tmp[j - 1].fullname[0])
+                        {
+                            if (tmp[j].hscv() < tmp[j - 1].hscv())
+                            {
+                                EMPLOYEE temp = new EMPLOYEE();
+                                temp = tmp[j];
+                                tmp[j] = tmp[j - 1];
+                                tmp[j - 1] = temp;
+                            }
+                        }
+                    }
+                }
+        }
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.Write("nhập số lượng nhân viên : ");
+            int c = Int32.Parse(Console.ReadLine());
+            //List<EMPLOYEE> ds = new List<EMPLOYEE>();
+            EMPLOYEE[] ds = new EMPLOYEE[20];
+            for (int i = 0; i < c; i++)
+            {
+                //EMPLOYEE tmp = new EMPLOYEE();
+                //tmp.INPUT();
+                //ds.Add(tmp);
+                ds[i] = new EMPLOYEE();
+                ds[i].INPUT();
+            }
+
+            
+            while (true)
+            {
+                Console.WriteLine("menu : ");
+                Console.WriteLine("1: Thêm nhân viên");
+                Console.WriteLine("2: Hiển thị danh sách nhân viên");
+                Console.WriteLine("3: Sắp xếp danh sách nhân viên");
+                Console.WriteLine("4: Thoát");
+                Console.WriteLine("Vui lòng chọn lựa chọn của bạn : ");
+                string tmp = Console.ReadLine();
+                int temp = 0;
+                switch (tmp)
+                {
+                    case "1":
+
+                        Console.WriteLine("chọn vị trí muốn thêm : ");
+                        int index = Int32.Parse(Console.ReadLine())-1;
+                        
+                        EMPLOYEE nv = new EMPLOYEE();
+                        nv.INPUT();
+                        for(int i = 0; i < c; i++)
+                        {
+                            if (nv.id == ds[i].id)
+                            {
+                                do
+                                {
+                                    Console.WriteLine("Ma nhan vien da ton tai vui long nhap lai : ");
+                                    nv.id = Console.ReadLine();
+                                }
+                                while (nv.id == ds[i].id);
+                                
+                            }
+                        }
+                        //EMPLOYEE tam = new EMPLOYEE();
+                        //ds.Add(tam);
+                        //ds.Insert(index, nv);
+                        ds[c] = new EMPLOYEE();
+                        if (index > c)
+                        { 
+                            ds[c] = nv;
+                            c = c + 1;
+                        }
+                        else
+                        {
+                            if (index < 1) index = 1;
+                            
+                            for (int i = c; i > index-1 ;i--)
+                            {
+                                
+                                ds[i] = ds[i - 1];
+                            }
+                            ds[index-1] = nv;
+                            c = c + 1;
+                        }
+                        //c += 1;
+                        break;
+                    case "2":
+                        Console.WriteLine("Hiển thị danh sách nhân viên : ");
+                        Console.WriteLine("Họ tên".PadRight(10)+ "Địa chỉ".PadRight(10)+ "Mã Nhân Viên".PadRight(10)+ "Chức vụ".PadRight(10)+ "Lương\n");
+                        for(int i = 0; i < c; i++)
+                        {
+                            ds[i].OUTPUT();
+                        }
+                        break;
+                    case "3":
+                        //ds.Sort();
+                        bbs(ds, c);
+                        //bbs(ds);
+                        break;
+                    case "4":
+                        temp = 1; break;
+                    default :
+                        Console.WriteLine("__lựa chọn không có trong menu vui lòng chọn lại__");
+                        break;
+                }
+                if (temp == 1) break;
+            }
+            //Console.WriteLine("Hello, World!");
+        }
+    }
+}

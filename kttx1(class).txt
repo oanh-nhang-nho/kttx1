@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KTTX1
+{
+    internal class PERSON
+    {
+        
+        private string _fullname, _address;
+        public string fullname
+        {
+            get { return _fullname; }
+            set { _fullname = value; }
+        }
+        public string address
+        {
+            get { return _address; }
+            set { _address = value; }
+        }
+        public PERSON() { }
+        public virtual void INPUT()
+        {
+            Console.WriteLine("Nhập thông tin : ");
+            Console.Write("Nhập tên : ");
+            _fullname = Console.ReadLine();
+            Console.Write("Nhập địa chỉ : ");
+            _address = Console.ReadLine();
+        }
+    }
+    internal class EMPLOYEE:PERSON
+    {
+        private string _id, _position;
+        private float _salary;
+        public string id
+        {
+            get
+            {
+                return _id;
+            }
+            set { _id = value; }
+        }
+        public string position
+        {
+            get
+            {
+                return _position;
+            }
+            set { _position = value; }
+        }
+        public float salary
+        {
+            get
+            {
+                return _salary;
+            }
+            set
+            {
+                _salary = value;
+            }
+
+        }
+        public EMPLOYEE() { }
+        public override void INPUT()
+        {
+            base.INPUT();
+            
+            Console.Write("nhap chuc vu : ");
+            _position = Console.ReadLine();
+            Console.Write("nhap luong : ");
+            _salary = Single.Parse(Console.ReadLine());
+            Console.Write("nhap ma nhan vien : ");
+            _id = Console.ReadLine();
+        }
+        public int hscv() 
+        {
+            int hs = 0;
+            switch (_position)
+            {
+                case "Giám đốc":
+                case "director general":
+                    hs = 10; break;
+                case "Trưởng phòng hoặc phó giám đốc":
+                    hs = 6; break;
+                case "phó phòng":
+                    hs = 4; break;
+                default:
+                    hs = 2; break;
+            }
+            return hs;
+        }
+        public void OUTPUT()
+        {
+
+            Console.Write(fullname.PadRight(10) + address.PadRight(10) + id.PadRight(10) + position.PadRight(10) + salary + "\n");
+
+        }
+    }
+}
